@@ -6,16 +6,16 @@ std::string getChar(STATE state) {
     switch(state){
 
             case O:
-            return "O";
+            return " O ";
             break;
             case X:
-            return "X";
+            return " X ";
             break;
             case BLANK:
-            return " ";
+            return "   ";
             break;
             default:
-            return "!";
+            return " ! ";
 
         }
 }
@@ -29,7 +29,7 @@ void printGrid(STATE grid[9]){
             std::cout << std::endl;
             
             if(i > 0){
-                std::cout << "-----" << std::endl;
+                std::cout << "-----------" << std::endl;
             }
         }
 
@@ -48,7 +48,7 @@ class GameController{
     public:
 
     GameController(STATE* _grid) : gridPtr(_grid) {}
-    ~GameController() { delete[] gridPtr; }
+    ~GameController() {}
 
     void startRound(STATE &turn){
         char player = (turn == O ? "O"[0] : "X"[0]);
@@ -64,9 +64,7 @@ class GameController{
             std::cin >> cell;
         }
         
-        // std::cout << "Cell " << cell << " was " << gridPtr[cell] << " but is now ";
         gridPtr[cell] = turn;
-        // std::cout << gridPtr[cell] << std::endl;
 
         turn = turn == O ? X : O;
     }
