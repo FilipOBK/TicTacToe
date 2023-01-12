@@ -1,21 +1,21 @@
 #include <iostream>
 enum STATE{BLANK, O, X};
 
-char getChar(STATE state) {
+std::string getChar(STATE state) {
     
     switch(state){
 
             case O:
-            return 'O';
+            return "O";
             break;
             case X:
-            return 'X';
+            return "X";
             break;
             case BLANK:
-            return ' ';
+            return " ";
             break;
             default:
-            return '!';
+            return "!";
 
         }
 }
@@ -77,10 +77,7 @@ class GameController{
         { 
             if (grid[i * 3] == grid[(i * 3) + 1] && 
                 grid[(i * 3) + 1] == grid[(i * 3) + 2] && 
-                grid[i * 3] != BLANK)
-                {
-                    return (grid[i * 3]);
-                } 
+                grid[i * 3] != BLANK) { return (grid[i * 3]); } 
         } 
         
         //check the columns 
@@ -88,7 +85,7 @@ class GameController{
         { 
             if (grid[i] == grid[i + 3] && 
                 grid[i + 3] == grid[i + 6] && 
-                grid[i] != BLANK) { return grid[i];}
+                grid[i] != BLANK) { return grid[i]; }
         } 
         
         //check the diagonals 
@@ -104,6 +101,16 @@ class GameController{
         return BLANK; 
     } 
 
+    bool checkDraw(){
+        bool hasBlank = false;
+        for(int i = 0; i < 9; i++){
+            
+            if(gridPtr[i] == BLANK) hasBlank = true;
+
+        }
+        return !hasBlank;
+    }
+
 };
 
 int main(){
@@ -111,13 +118,13 @@ int main(){
     GameController controller(&grid[0]);
     STATE turn = X;
     for(int i = 0; i < 9; i++){ grid[i] = BLANK; }
-    while(controller.checkWin(grid) == BLANK){
+    while(controller.checkWin(grid) == BLANK && !controller.checkDraw()){
 
         controller.startRound(turn);
-        printGrid(grid);
 
     }
-
-    std::cout << getChar(controller.checkWin(grid)) << " won!\n";
+    STATE winner = controller.checkWin(grid); 
+    printGrid(grid);
+    std::cout << (winner == BLANK ? "Nobody" : getChar(winner)) << " won!\n";
 
 }
