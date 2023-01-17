@@ -58,10 +58,12 @@ class GameController{
         int cell = 50;
         std::cout << "Enter a cell index: ";
         std::cin >> cell;
+        cell--;
         while(cell < 0 || cell > 8 || gridPtr[cell] != BLANK){
             std::cout << "INVALID\n";
             std::cout << "Enter a cell index: ";
             std::cin >> cell;
+            cell--;
         }
         
         gridPtr[cell] = turn;
